@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFML_topdown", "SFML_topdown\SFML_topdown.vcxproj", "{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Debug|x64.ActiveCfg = Debug|x64
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Debug|x64.Build.0 = Debug|x64
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Debug|x86.ActiveCfg = Debug|Win32
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Debug|x86.Build.0 = Debug|Win32
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Release|x64.ActiveCfg = Release|x64
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Release|x64.Build.0 = Release|x64
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Release|x86.ActiveCfg = Release|Win32
+		{AB6A6A8A-B4E9-4C03-A4F2-C89A0C46CC63}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BF50629-56C1-4160-BB52-62EF9A0ABB2D}
+	EndGlobalSection
+EndGlobal
