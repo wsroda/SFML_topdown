@@ -1,16 +1,35 @@
 #include "Game.h"
 
 
+
+
 //init
 void Game::initWindow()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "GRA");
+	std::ifstream ifs("Config/window.ini");
+	sf::VideoMode window_bounds(800,600);
+	std::string title = "None";
+	unsigned framerate_limit = 120;
+	bool vertical_sync_enabled = false;
+	if (ifs.is_open())
+	{
+		std::getline(ifs, title);
+		ifs >> window_bounds.height;
+		ifs >> framerate_limit;
+		ifs >> vertical_sync_enabled;
+	}
+
+	this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close);
+	this->window->setFramerateLimit(framerate_limit);
+	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+
 }
 
 //Constructor/Destructor
 Game::Game()
 {
 	this->initWindow();
+
 }
 
 Game::~Game()
@@ -20,7 +39,7 @@ Game::~Game()
 
 
 //functions
-void Game::updateEvents()
+void Game::updateSFMLEvents()
 {
 	while (this->window->pollEvent(this->sfEvent))
 	{
@@ -31,22 +50,33 @@ void Game::updateEvents()
 
 void Game::update()
 {
-	this->updateEvents();
+	//player movement
+
+	player->update();
+
+	player->rotateToMouse(this->window);
+
+	this->updateSFMLEvents();
+
 }
 
 void Game::render()
 {
 	this->window->clear();
 
-	//render
+	player->render(this->window);
 
 	this->window->display();
 }
 
 void Game::run()
 {
+	player = new Player({ 400 , 300 });
+
+
 	while (this->window->isOpen())
 	{
+		Time::updateDeltaTime();
 		this->update();
 		this->render();
 	}
