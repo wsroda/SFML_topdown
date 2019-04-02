@@ -1,5 +1,4 @@
 #include "Time.h"
-#include<iostream>
 
 sf::Clock Time::dtClock;
 float Time::deltaTime;

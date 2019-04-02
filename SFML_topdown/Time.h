@@ -1,5 +1,3 @@
-
-
 #include<SFML/System.hpp>
 
 class Time
