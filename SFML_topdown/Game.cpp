@@ -54,8 +54,6 @@ void Game::update()
 
 	player->update();
 
-	player->rotateToMouse(this->window);
-
 	this->updateSFMLEvents();
 
 }
@@ -71,7 +69,7 @@ void Game::render()
 
 void Game::run()
 {
-	player = new Player({ 400 , 300 });
+	player = new Player({ 400 , 300 }, window);
 
 
 	while (this->window->isOpen())

@@ -2,12 +2,15 @@
 
 
 
-Player::Player(sf::Vector2f pos)
+Player::Player(sf::Vector2f pos, sf::RenderWindow *win)
 {
 	playerShape.setSize({ 48,48 });
 	playerShape.setFillColor(sf::Color::Green);
 	playerShape.setPosition(pos);
 	playerShape.setOrigin({ 24,24 });
+	window = win;
+
+
 }
 
 Player::~Player()
@@ -27,7 +30,9 @@ float Player::getY()
 
 void Player::render(sf::RenderWindow *window)
 {
+	window->draw(debugline, 2, sf::Lines); // DEBUG
 	window->draw(playerShape);
+	
 }
 
 void Player::update()
@@ -47,9 +52,9 @@ void Player::update()
 		movey = 1.f;
 	}
 	move();
+	rotateToMouse();
+	debugline[1] = sf::Vertex(sf::Vector2f(getX(), getY())); //DEBUG
 
-
-	std::cout << movex << " " << movey << std::endl;
 
 
 	//rotateToMouse(this->window); // TODO widocznosc window w klasie playera
@@ -66,20 +71,22 @@ void Player::setRotation(float angle)
 	playerShape.setRotation(angle);
 }
 
-void Player::rotateToMouse(sf::RenderWindow *window)
+void Player::rotateToMouse()
 {
 	sf::Vector2f curPos;
 	curPos.x = Player::getX();
 	curPos.y = Player::getY();
 	sf::Vector2i position = sf::Mouse::getPosition(*window);
+	debugline[0] = sf::Vertex(sf::Vector2f((float)position.x, (float)position.y)); // DEBUG
+
 
 	const float PI = 3.14159265f;
 
 	float dx = curPos.x - position.x;
 	float dy = curPos.y - position.y;
-	float rotation = (atan2(dy, dx)) * 180 / PI;
+	angle = (atan2(dy, dx)) * 180 / PI;
 
-	setRotation(rotation);
+	setRotation(angle);
 }
 
 
