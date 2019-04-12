@@ -20,8 +20,8 @@ void Game::initWindow()
 	}
 
 	this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close);
-	this->window->setFramerateLimit(framerate_limit);
-	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+	//this->window->setFramerateLimit(framerate_limit);
+	//this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 
 }
 
@@ -54,15 +54,19 @@ void Game::update()
 
 	player->update();
 
+	
+
 	this->updateSFMLEvents();
 
 }
 
 void Game::render()
 {
-	this->window->clear();
+	this->window->clear(sf::Color::Black);
 
 	player->render(this->window);
+
+	Time::showFPS(this->window);
 
 	this->window->display();
 }

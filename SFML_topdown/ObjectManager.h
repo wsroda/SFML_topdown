@@ -6,10 +6,12 @@ class ObjectManager
 {
 
 private:
-	std::vector<GameObject> GameObjects;
+	
 
 public:
 	ObjectManager();
 	~ObjectManager();
+
+	static std::vector<GameObject> GameObjects;
 };
 
