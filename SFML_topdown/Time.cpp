@@ -1,7 +1,7 @@
 #include "Time.h"
-#include <sstream>
 
 sf::Clock Time::dtClock;
+sf::Clock Time::Clock;
 float Time::deltaTime;
 sf::Font Time::font;
 bool Time::fontLoaded = false;
@@ -38,7 +38,6 @@ void Time::showFPS(sf::RenderWindow *window)
 	fpsText.setFont(font);
 	fpsText.setCharacterSize(18);
 	fpsText.setStyle(sf::Text::Bold);
-	fpsText.setColor(sf::Color::White);
 
 	fpsText.setPosition(5, 0);
 	

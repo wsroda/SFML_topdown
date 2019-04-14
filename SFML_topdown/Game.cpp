@@ -50,11 +50,9 @@ void Game::updateSFMLEvents()
 
 void Game::update()
 {
-	//player movement
 
-	player->update();
-
-	
+	ObjectManager::update(); //UPDATING EVERY GAME OBJECT
+	//player->update();
 
 	this->updateSFMLEvents();
 
@@ -64,7 +62,7 @@ void Game::render()
 {
 	this->window->clear(sf::Color::Black);
 
-	player->render(this->window);
+	ObjectManager::render(this->window);
 
 	Time::showFPS(this->window);
 

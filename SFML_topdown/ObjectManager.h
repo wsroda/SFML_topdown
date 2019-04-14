@@ -1,6 +1,8 @@
+#pragma once
 #include<vector>
 #include"GameObject.h"
-#pragma once
+
+
 
 class ObjectManager
 {
@@ -11,7 +13,9 @@ private:
 public:
 	ObjectManager();
 	~ObjectManager();
-
-	static std::vector<GameObject> GameObjects;
+	static std::vector<GameObject *> gameObjects;
+	static void add(GameObject *obj);
+	static void update();
+	static void render(sf::RenderWindow *win);
 };
 

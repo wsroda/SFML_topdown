@@ -66,13 +66,12 @@ void Player::update()
 	}
 
 	//shoot cd
-	/*
 	if (!canShoot)
 	{
 		if (shootCD + 1 < Time::Clock.getElapsedTime().asSeconds())
 			canShoot = true;
 	}
-	*/
+
 	//shoot cd
 
 	move();

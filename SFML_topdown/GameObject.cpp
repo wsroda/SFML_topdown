@@ -1,11 +1,12 @@
 #include "GameObject.h"
+#include "ObjectManager.h"
 
 
 
 
 GameObject::GameObject()
 {
-
+	ObjectManager::add(this);
 }
 
 

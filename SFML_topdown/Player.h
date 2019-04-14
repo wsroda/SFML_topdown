@@ -2,11 +2,12 @@
 #define PLAYER_H
 
 #include"SFML/Graphics.hpp"
-#include"GameObject.h"
 #include<iostream>
 #include<vector>
+#include"ObjectManager.h"
+#include"Bullet.h"
 
-#pragma once
+
 
 class Player: public GameObject
 {
@@ -22,6 +23,8 @@ private:
 
 	sf::RenderWindow *window;
 	
+	
+	std::vector<Bullet*> bullets;
 
 public:
 	Player(sf::Vector2f pos, sf::RenderWindow *win);
@@ -29,9 +32,14 @@ public:
 
 	float speed = 200.f;
 
+	void shoot();
 	float getX();
 	float getY();
+	float getRotation();
 	
+	bool canShoot = true;
+	float shootCD;
+
 	virtual void render(sf::RenderWindow *window) override;
 	virtual void update() override;
 	void rotateToMouse();
