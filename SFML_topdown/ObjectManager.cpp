@@ -16,10 +16,16 @@ void ObjectManager::add(GameObject *obj)
 	gameObjects.push_back(obj);
 }
 
+void ObjectManager::remove(GameObject *obj)
+{
+
+}
+
+
 void ObjectManager::update()
 {
-	for (GameObject *i : gameObjects)
-		i->update();
+	for (std::size_t i = 0; i < gameObjects.size(); ++i)
+		gameObjects[i]->update();
 }
 
 void ObjectManager::render(sf::RenderWindow * win)

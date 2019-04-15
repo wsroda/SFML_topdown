@@ -34,5 +34,6 @@ void Bullet::render(sf::RenderWindow * window)
 
 void Bullet::update()
 {
+	;
 	move();
 }
