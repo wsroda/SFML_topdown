@@ -79,6 +79,9 @@ void Player::update()
 	rotateToMouse();
 	debugline[1] = sf::Vertex(sf::Vector2f(getX(), getY())); //DEBUG
 
+
+
+	//rotateToMouse(this->window); // TODO widocznosc window w klasie playera
 }
 
 void Player::move()
