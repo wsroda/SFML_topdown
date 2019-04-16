@@ -25,13 +25,15 @@ private:
 	std::vector<Bullet*> bullets;
 
 	bool canShoot = true;
-	float shootCD;
+	float timeToShoot;
+
 
 public:
 	Player(sf::Vector2f pos, sf::RenderWindow *win);
 	~Player();
 
 	float speed = 200.f;
+	float shootCD = 0.5f;
 
 	void shoot();
 	float getX();

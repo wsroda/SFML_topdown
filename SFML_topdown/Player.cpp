@@ -69,7 +69,7 @@ void Player::update()
 
 	if (!canShoot)
 	{
-		if (shootCD + 1 < Time::Clock.getElapsedTime().asSeconds())
+		if (timeToShoot + shootCD < Time::Clock.getElapsedTime().asSeconds())
 			canShoot = true;
 	}
 
@@ -97,8 +97,7 @@ void Player::shoot()
 		bullets.push_back(new Bullet({ getX(), getY() }, getRotation()));
 		std::cout << bullets.size() << std::endl;
 		canShoot = false;
-		shootCD = Time::Clock.getElapsedTime().asSeconds();
-		//std::cout << shootCD << std::endl;
+		timeToShoot= Time::Clock.getElapsedTime().asSeconds();
 	}
 
 }
