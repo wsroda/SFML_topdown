@@ -12,7 +12,7 @@ public:
 	Bullet(sf::Vector2f pos, float angle);
 	~Bullet();
 
-	float speed = 300.f;
+	float speed = 600.f;
 
 	virtual void render(sf::RenderWindow *window) override;
 	virtual void update() override;

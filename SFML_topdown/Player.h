@@ -22,9 +22,10 @@ private:
 	void setRotation(float angle);
 
 	sf::RenderWindow *window;
-	
-	
 	std::vector<Bullet*> bullets;
+
+	bool canShoot = true;
+	float shootCD;
 
 public:
 	Player(sf::Vector2f pos, sf::RenderWindow *win);
@@ -37,9 +38,7 @@ public:
 	float getY();
 	float getRotation();
 	
-	bool canShoot = true;
-	float shootCD;
-
+	
 	virtual void render(sf::RenderWindow *window) override;
 	virtual void update() override;
 	void rotateToMouse();
@@ -48,7 +47,7 @@ public:
 	{
 		sf::Vertex(sf::Vector2f(0 ,0)),
 		sf::Vertex(sf::Vector2f(0 ,0))
-	};;
+	};
 };
 
 #endif
