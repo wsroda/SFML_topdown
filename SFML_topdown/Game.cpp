@@ -79,5 +79,6 @@ void Game::run()
 		Time::updateDeltaTime();
 		this->update();
 		this->render();
+		ObjectManager::manageObjects();
 	}
 }

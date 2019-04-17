@@ -11,16 +11,16 @@ ObjectManager::~ObjectManager()
 {
 }
 
-void ObjectManager::add(GameObject *obj)
+void ObjectManager::add(GameObject *obj) //adding objects to std::stack
 {
 	gameObjects.push_back(obj);
+	
 }
 
-void ObjectManager::remove(GameObject *obj)
+void ObjectManager::remove(GameObject *obj) //adding objects to std::stack
 {
 
 }
-
 
 void ObjectManager::update()
 {
@@ -28,8 +28,16 @@ void ObjectManager::update()
 		gameObjects[i]->update();
 }
 
+
+
 void ObjectManager::render(sf::RenderWindow * win)
 {
 	for (GameObject *i : gameObjects)
 		i->render(win);
 }
+
+void ObjectManager::manageObjects()
+{
+	//adding and removing objects from std::stack
+}
+

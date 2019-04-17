@@ -19,6 +19,6 @@ public:
 
 	static void update();
 	static void render(sf::RenderWindow *win);
-	
+	static void manageObjects();
 };
 
