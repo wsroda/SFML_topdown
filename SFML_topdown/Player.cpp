@@ -95,9 +95,19 @@ void Player::shoot()
 	if (canShoot)
 	{
 		bullets.push_back(new Bullet({ getX(), getY() }, getRotation()));
-		std::cout << bullets.size() << std::endl;
+		std::cout << "bullets size: " << bullets.size() << std::endl;
 		canShoot = false;
 		timeToShoot= Time::Clock.getElapsedTime().asSeconds();
+		
+		//REMOVING BULLETS
+		
+		/*
+		for (int i = 0; i < bullets.size()-1; i++)
+		{
+			ObjectManager::remove(bullets[i]);
+			bullets.erase(bullets.begin() + i);
+		}
+		*/
 	}
 
 }

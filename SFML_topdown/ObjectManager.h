@@ -1,6 +1,8 @@
 #pragma once
 #include<vector>
+#include<algorithm>
 #include"GameObject.h"
+#include<stack>
 
 
 
@@ -9,6 +11,8 @@ class ObjectManager
 
 private:
 	static std::vector<GameObject*> gameObjects;
+	static std::stack<GameObject*> toRemove;
+	static std::stack<GameObject*> toAdd;
 
 public:
 	ObjectManager();

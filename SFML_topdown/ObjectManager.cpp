@@ -2,6 +2,9 @@
 
 std::vector<GameObject*> ObjectManager::gameObjects = std::vector<GameObject*>();
 
+std::stack<GameObject*> ObjectManager::toAdd = std::stack<GameObject*>();
+std::stack<GameObject*> ObjectManager::toRemove = std::stack<GameObject*>();
+
 ObjectManager::ObjectManager()
 {
 }
@@ -9,17 +12,17 @@ ObjectManager::ObjectManager()
 
 ObjectManager::~ObjectManager()
 {
+
 }
 
-void ObjectManager::add(GameObject *obj) //adding objects to std::stack
+void ObjectManager::add(GameObject *obj) //adding objects
 {
-	gameObjects.push_back(obj);
-	
+	toAdd.push(obj);
 }
 
-void ObjectManager::remove(GameObject *obj) //adding objects to std::stack
+void ObjectManager::remove(GameObject *obj) //removing objects
 {
-
+	toRemove.push(obj);
 }
 
 void ObjectManager::update()
@@ -38,6 +41,24 @@ void ObjectManager::render(sf::RenderWindow * win)
 
 void ObjectManager::manageObjects()
 {
-	//adding and removing objects from std::stack
+	//adding objects
+	while (!toAdd.empty()) 
+	{
+		gameObjects.push_back(toAdd.top());
+		std::cout << "usunieto: " << toAdd.top() << std::endl;
+		toAdd.pop();
+	}
+
+
+
+
+	//removing objects
+	while (!toRemove.empty()) 
+	{ 
+		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), toRemove.top()), gameObjects.end());
+		toRemove.pop();
+	}
+
+	std::cout << "gameobjects size: " << gameObjects.size() << std::endl;
 }
 
