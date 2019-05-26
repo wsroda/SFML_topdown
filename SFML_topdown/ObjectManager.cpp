@@ -45,7 +45,6 @@ void ObjectManager::manageObjects()
 	while (!toAdd.empty()) 
 	{
 		gameObjects.push_back(toAdd.top());
-		std::cout << "usunieto: " << toAdd.top() << std::endl;
 		toAdd.pop();
 	}
 
@@ -59,7 +58,5 @@ void ObjectManager::manageObjects()
 		delete toRemove.top();
 		toRemove.pop();
 	}
-
-	std::cout << "gameobjects size: " << gameObjects.size() << std::endl;
 }
 
