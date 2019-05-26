@@ -56,6 +56,7 @@ void ObjectManager::manageObjects()
 	while (!toRemove.empty()) 
 	{ 
 		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), toRemove.top()), gameObjects.end());
+		delete toRemove.top();
 		toRemove.pop();
 	}
 
