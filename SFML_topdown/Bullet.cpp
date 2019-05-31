@@ -11,7 +11,7 @@ Bullet::Bullet(sf::Vector2f pos, float alpha)
 	angle = alpha;
 	bulletShape.setRotation(angle);
 
-	std::cout << bulletShape.getRotation() << std::endl;
+	//std::cout << bulletShape.getRotation() << std::endl;
 }
 
 Bullet::~Bullet()

@@ -25,12 +25,29 @@ void ObjectManager::remove(GameObject *obj) //removing objects
 	toRemove.push(obj);
 }
 
+void ObjectManager::destroy(GameObject *obj, float sec) //destroying objects (schedule destroying)
+{
+	if (sec == 0.f)
+	{
+		ObjectManager::remove(obj);
+	}
+	else
+	{
+		if (!obj->destroying)
+		{
+			obj->destroying = true;
+			obj->timeToDestroy = Time::Clock.getElapsedTime().asSeconds() + sec;
+		}
+	}
+	
+
+}
+
 void ObjectManager::update()
 {
 	for (std::size_t i = 0; i < gameObjects.size(); ++i)
 		gameObjects[i]->update();
 }
-
 
 
 void ObjectManager::render(sf::RenderWindow * win)
@@ -41,14 +58,20 @@ void ObjectManager::render(sf::RenderWindow * win)
 
 void ObjectManager::manageObjects()
 {
+	//checking objects scheduled to destroy
+	for (auto object: ObjectManager::gameObjects)
+		if (object->destroying)
+		{
+			if (Time::Clock.getElapsedTime().asSeconds() > object->timeToDestroy)
+				ObjectManager::remove(object);
+		}
+
 	//adding objects
 	while (!toAdd.empty()) 
 	{
 		gameObjects.push_back(toAdd.top());
 		toAdd.pop();
 	}
-
-
 
 
 	//removing objects

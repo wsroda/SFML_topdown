@@ -20,6 +20,7 @@ public:
 	
 	static void add(GameObject *obj);
 	static void remove(GameObject *obj);
+	static void destroy(GameObject *obj, float sec=0.f);
 
 	static void update();
 	static void render(sf::RenderWindow *win);

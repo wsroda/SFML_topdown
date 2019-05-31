@@ -11,5 +11,10 @@ public:
 
 	virtual void update();
 	virtual void render(sf::RenderWindow *window);
+	void destroy(float sec);
+
+	bool destroying = false;
+	float timeToDestroy;
+	
 };
 

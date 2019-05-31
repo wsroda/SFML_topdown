@@ -81,4 +81,5 @@ void Game::run()
 		this->render();
 		ObjectManager::manageObjects();
 	}
+	
 }
