@@ -9,6 +9,8 @@ void Game::initWindow()
 	std::ifstream ifs("Config/window.ini");
 	sf::VideoMode window_bounds(800,600);
 	std::string title = "None";
+
+
 	unsigned framerate_limit = 120;
 	bool vertical_sync_enabled = false;
 	if (ifs.is_open())
@@ -20,6 +22,10 @@ void Game::initWindow()
 	}
 
 	this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close);
+
+	sf::Cursor cursor;
+	if (cursor.loadFromSystem(sf::Cursor::Cross))
+		this->window->setMouseCursor(cursor);
 	//this->window->setFramerateLimit(framerate_limit);
 	//this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 
@@ -73,9 +79,14 @@ void Game::run()
 {
 	player = new Player({ 400 , 300 }, window);
 
+	sf::Cursor cursor;
+	cursor.loadFromSystem(sf::Cursor::Cross);
 
 	while (this->window->isOpen())
 	{
+
+		this->window->setMouseCursor(cursor);
+
 		Time::updateDeltaTime();
 		this->update();
 		this->render();

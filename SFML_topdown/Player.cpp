@@ -11,7 +11,6 @@ Player::Player(sf::Vector2f pos, sf::RenderWindow *win)
 	playerShape.setPosition(pos);
 	playerShape.setOrigin({ 24,24 });
 	window = win;
-	bullets = std::vector<Bullet*>();
 
 
 }
@@ -38,7 +37,7 @@ float Player::getRotation()
 
 void Player::render(sf::RenderWindow *window)
 {
-	window->draw(debugline, 2, sf::Lines); // DEBUG
+	//window->draw(debugline, 2, sf::Lines); // DEBUG
 	window->draw(playerShape);
 	
 }
@@ -69,7 +68,7 @@ void Player::update()
 
 	if (!canShoot)
 	{
-		if (timeToShoot + shootCD < Time::Clock.getElapsedTime().asSeconds())
+		if (Time::Clock.getElapsedTime().asSeconds() > timeToNextShot)
 			canShoot = true;
 	}
 
@@ -90,25 +89,17 @@ void Player::move()
 	playerShape.move({ movex * speed * dt, movey * speed * dt});
 }
 
-void Player::shoot()
+void Player::shoot(float cd)
 {
 	if (canShoot)
 	{
 		ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()),1.f);
-		//bullets.push_back(new Bullet({ getX(), getY() }, getRotation()));
-		//std::cout << "bullets size: " << bullets.size() << std::endl;
+
 		canShoot = false;
-		timeToShoot= Time::Clock.getElapsedTime().asSeconds();
+		timeToNextShot= Time::Clock.getElapsedTime().asSeconds() + cd;
 		
-		//REMOVING BULLETS
 		
-		/*
-		for (int i = 0; i < bullets.size()-1; i++)
-		{
-			ObjectManager::remove(bullets[i]);
-			bullets.erase(bullets.begin() + i);
-		}
-		*/
+
 	}
 
 }
@@ -124,7 +115,8 @@ void Player::rotateToMouse()
 	curPos.x = getX();
 	curPos.y = getY();
 	sf::Vector2i position = sf::Mouse::getPosition(*window);
-	debugline[0] = sf::Vertex(sf::Vector2f((float)position.x, (float)position.y)); // DEBUG
+
+	//debugline[0] = sf::Vertex(sf::Vector2f((float)position.x, (float)position.y)); // DEBUG
 
 
 	const float PI = 3.14159265359f;

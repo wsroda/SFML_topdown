@@ -25,7 +25,7 @@ private:
 	std::vector<Bullet*> bullets;
 
 	bool canShoot = true;
-	float timeToShoot;
+	float timeToNextShot;
 
 
 public:
@@ -33,9 +33,8 @@ public:
 	~Player();
 
 	float speed = 200.f;
-	float shootCD = 0.5f;
 
-	void shoot();
+	void shoot(float cd=0.5f);
 	float getX();
 	float getY();
 	float getRotation();
