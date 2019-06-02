@@ -6,13 +6,11 @@
 
 Player::Player(sf::Vector2f pos, sf::RenderWindow *win)
 {
-	playerShape.setSize({ 48,48 });
-	playerShape.setFillColor(sf::Color::Green);
-	playerShape.setPosition(pos);
-	playerShape.setOrigin({ 24,24 });
+	collider.setSize({ 32, 32 });
+	collider.setFillColor(sf::Color::Green);
+	collider.setPosition(pos);
+	collider.setOrigin({ 16, 16 });
 	window = win;
-
-
 }
 
 Player::~Player()
@@ -22,23 +20,23 @@ Player::~Player()
 
 float Player::getX()
 {
-	return playerShape.getPosition().x;
+	return collider.getPosition().x;
 }
 
 float Player::getY()
 {
-	return playerShape.getPosition().y;
+	return collider.getPosition().y;
 }
 
 float Player::getRotation()
 {
-	return playerShape.getRotation();
+	return collider.getRotation();
 }
 
 void Player::render(sf::RenderWindow *window)
 {
 	//window->draw(debugline, 2, sf::Lines); // DEBUG
-	window->draw(playerShape);
+	window->draw(collider);
 	
 }
 
@@ -46,17 +44,22 @@ void Player::update()
 {
 	movex = 0.f;
 	movey = 0.f;
+	
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W))) {
-		movey = -1.f;
+		if (collider.getPosition().y > 0)
+			movey = -1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D))) {
-		movex = 1.f;
+		if (collider.getPosition().x < window->getSize().x)
+			movex = 1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A))) {
-		movex = -1.f;
+		if (collider.getPosition().x > 0)
+			movex = -1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S))) {
-		movey = 1.f;
+		if (collider.getPosition().y < window->getSize().y)
+			movey = 1.f;
 	}
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -86,7 +89,7 @@ void Player::update()
 void Player::move()
 {
 	float dt = Time::deltaTime;
-	playerShape.move({ movex * speed * dt, movey * speed * dt});
+	collider.move({ movex * speed * dt, movey * speed * dt});
 }
 
 void Player::shoot(float cd)
@@ -106,7 +109,7 @@ void Player::shoot(float cd)
 
 void Player::setRotation(float angle)
 {
-	playerShape.setRotation(angle);
+	collider.setRotation(angle);
 }
 
 void Player::rotateToMouse()

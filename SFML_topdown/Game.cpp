@@ -7,7 +7,7 @@
 void Game::initWindow()
 {
 	std::ifstream ifs("Config/window.ini");
-	sf::VideoMode window_bounds(800,600);
+	sf::VideoMode window_bounds(800,800);
 	std::string title = "None";
 
 
@@ -16,7 +16,6 @@ void Game::initWindow()
 	if (ifs.is_open())
 	{
 		std::getline(ifs, title);
-		ifs >> window_bounds.height;
 		ifs >> framerate_limit;
 		ifs >> vertical_sync_enabled;
 	}
@@ -51,6 +50,15 @@ void Game::updateSFMLEvents()
 	{
 		if (this->sfEvent.type == sf::Event::Closed)
 			this->window->close();
+
+	/*
+		if (this->sfEvent.type == sf::Event::LostFocus)
+			pause();
+
+		if (this->sfEvent.type == sf::Event::GainedFocus)
+			resume();
+	*/
+
 	}
 }
 
@@ -61,7 +69,6 @@ void Game::update()
 	//player->update();
 
 	this->updateSFMLEvents();
-
 }
 
 void Game::render()
@@ -77,7 +84,7 @@ void Game::render()
 
 void Game::run()
 {
-	player = new Player({ 400 , 300 }, window);
+	player = new Player({ (float)window->getSize().x / 2 , 3 * (float)window->getSize().y / 4 }, window);
 
 	sf::Cursor cursor;
 	cursor.loadFromSystem(sf::Cursor::Cross);
@@ -85,12 +92,13 @@ void Game::run()
 	while (this->window->isOpen())
 	{
 
-		this->window->setMouseCursor(cursor);
-
-		Time::updateDeltaTime();
-		this->update();
-		this->render();
-		ObjectManager::manageObjects();
+			this->window->setMouseCursor(cursor);	
+			Time::updateDeltaTime();
+			this->update();
+			this->render();
+			ObjectManager::manageObjects();
+		
 	}
 	
 }
+

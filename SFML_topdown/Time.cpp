@@ -36,7 +36,7 @@ void Time::showFPS(sf::RenderWindow *window)
 	ss << fps;
 	fpsText.setString(ss.str().c_str());
 	fpsText.setFont(font);
-	fpsText.setCharacterSize(18);
+	fpsText.setCharacterSize(14);
 	fpsText.setStyle(sf::Text::Bold);
 
 	fpsText.setPosition(5, 0);

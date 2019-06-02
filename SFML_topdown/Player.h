@@ -13,7 +13,7 @@ class Player: public GameObject
 {
 private:
 
-	sf::RectangleShape playerShape;
+	sf::RectangleShape collider;
 
 	void move();
 	float movex;

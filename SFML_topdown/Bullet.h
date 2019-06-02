@@ -4,7 +4,7 @@ class Bullet : public GameObject
 {
 
 private: 
-	sf::RectangleShape bulletShape;
+	sf::RectangleShape collider;
 	void move();
 	float angle;
 
