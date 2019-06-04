@@ -34,7 +34,7 @@ void Game::initWindow()
 Game::Game()
 {
 	this->initWindow();
-
+	Time::startClocks();
 }
 
 Game::~Game()
@@ -51,13 +51,11 @@ void Game::updateSFMLEvents()
 		if (this->sfEvent.type == sf::Event::Closed)
 			this->window->close();
 
-	/*
 		if (this->sfEvent.type == sf::Event::LostFocus)
 			pause();
 
 		if (this->sfEvent.type == sf::Event::GainedFocus)
 			resume();
-	*/
 
 	}
 }
@@ -68,7 +66,6 @@ void Game::update()
 	ObjectManager::update(); //UPDATING EVERY GAME OBJECT
 	//player->update();
 
-	this->updateSFMLEvents();
 }
 
 void Game::render()
@@ -91,14 +88,34 @@ void Game::run()
 
 	while (this->window->isOpen())
 	{
-
-			this->window->setMouseCursor(cursor);	
+		this->updateSFMLEvents();
+		if (!paused)
+		{
+			this->window->setMouseCursor(cursor);
 			Time::updateDeltaTime();
 			this->update();
 			this->render();
 			ObjectManager::manageObjects();
-		
+		}
 	}
 	
+}
+
+void Game::pause()
+{
+	if (!paused)
+	{
+		paused = true;
+		Time::pauseClocks();
+	}
+}
+
+void Game::resume()
+{
+	if (paused)
+	{
+		paused = false;
+		Time::resumeClocks();
+	}
 }
 

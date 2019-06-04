@@ -100,6 +100,7 @@ void Player::shoot(float cd)
 
 		canShoot = false;
 		timeToNextShot= Time::Clock.getElapsedTime().asSeconds() + cd;
+		std::cout << timeToNextShot << std::endl;
 		
 		
 

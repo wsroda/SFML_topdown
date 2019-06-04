@@ -1,7 +1,9 @@
 #include "Time.h"
 
-sf::Clock Time::dtClock;
-sf::Clock Time::Clock;
+//sf::Clock Time::dtClock;
+//sf::Clock Time::Clock;
+sftools::Chronometer Time::dtClock;
+sftools::Chronometer Time::Clock;
 float Time::deltaTime;
 sf::Font Time::font;
 bool Time::fontLoaded = false;
@@ -21,7 +23,7 @@ Time::~Time()
 
 void Time::updateDeltaTime()
 {
-	deltaTime = dtClock.restart().asSeconds();
+	deltaTime = dtClock.reset(true).asSeconds();
 }
 
 void Time::showFPS(sf::RenderWindow *window)
@@ -38,10 +40,26 @@ void Time::showFPS(sf::RenderWindow *window)
 	fpsText.setFont(font);
 	fpsText.setCharacterSize(14);
 	fpsText.setStyle(sf::Text::Bold);
-
 	fpsText.setPosition(5, 0);
-	
 	window->draw(fpsText);
+}
+
+void Time::startClocks()
+{
+	Time::dtClock.reset(true).asSeconds();
+	Time::Clock.reset(true).asSeconds();
+}
+
+void Time::pauseClocks()
+{
+	Time::dtClock.pause();
+	Time::Clock.pause();
+}
+
+void Time::resumeClocks()
+{
+	Time::dtClock.resume();
+	Time::Clock.resume();
 }
 
 void Time::loadFont()
@@ -51,3 +69,5 @@ void Time::loadFont()
 	else
 		fontLoaded = true;
 }
+
+

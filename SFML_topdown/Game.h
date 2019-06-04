@@ -23,6 +23,7 @@ private:
 	sf::RenderWindow *window;
 	sf::Event sfEvent;
 	void initWindow();
+	bool paused = false;
 
 public:
 	Game();
@@ -34,6 +35,9 @@ public:
 	void update();
 	void render();
 	void run();
+
+	void pause();
+	void resume();
 
 };
 
