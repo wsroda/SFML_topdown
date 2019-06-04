@@ -14,6 +14,7 @@
 #include"SFML/Network.hpp"
 
 #include"Player.h"
+#include"ShootingEnemy.h"
 
 
 class Game

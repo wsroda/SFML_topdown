@@ -4,14 +4,15 @@
 
 Bullet::Bullet(sf::Vector2f pos, float alpha)
 {
-	collider.setSize({ 8,4 });
-	collider.setFillColor(sf::Color::Red);
-	collider.setPosition(pos);
-	collider.setOrigin({ 4,2 });
+	sprite.setSize({ 8,4 });
+	sprite.setFillColor(sf::Color::Red);
+	sprite.setPosition(pos);
+	sprite.setOrigin({ 4,2 });
 	angle = alpha;
-	collider.setRotation(angle);
+	sprite.setRotation(angle);
+	const float PI = 3.14159265359f;
+	moveVector = sf::Vector2f(cos(angle * PI / 180), sin(angle * PI / 180));
 
-	//std::cout << bulletShape.getRotation() << std::endl;
 }
 
 Bullet::~Bullet()
@@ -24,16 +25,15 @@ void Bullet::move()
 	float dt = Time::deltaTime;
 	const float PI = 3.14159265359f;
 
-	collider.move({ speed * cos(angle * PI / 180) * dt, speed * sin(angle * PI / 180) * dt });
+	sprite.move({ speed * moveVector.x * dt, speed * moveVector.y * dt });
 }
 
 void Bullet::render(sf::RenderWindow * window)
 {
-	window->draw(collider);
+	window->draw(sprite);
 }
 
 void Bullet::update()
 {
-	;
 	move();
 }

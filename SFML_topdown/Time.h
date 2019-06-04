@@ -1,3 +1,6 @@
+#ifndef TIME_H
+#define TIME_H
+
 #include<SFML/System.hpp>
 #include<SFML/Graphics.hpp>
 #include<iostream>
@@ -29,4 +32,5 @@ public:
 	static void resumeClocks();
 
 };
+#endif
 

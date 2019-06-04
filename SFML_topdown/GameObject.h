@@ -1,3 +1,5 @@
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
 #include"SFML/Graphics.hpp"
 #include"Time.h"
@@ -13,8 +15,9 @@ public:
 	virtual void render(sf::RenderWindow *window);
 	void destroy(float sec);
 
+
 	bool destroying = false;
 	float timeToDestroy;
 	
 };
-
+#endif

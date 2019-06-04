@@ -6,10 +6,10 @@
 
 Player::Player(sf::Vector2f pos, sf::RenderWindow *win)
 {
-	collider.setSize({ 32, 32 });
-	collider.setFillColor(sf::Color::Green);
-	collider.setPosition(pos);
-	collider.setOrigin({ 16, 16 });
+	sprite.setSize({ 32, 32 });
+	sprite.setFillColor(sf::Color::Green);
+	sprite.setPosition(pos);
+	sprite.setOrigin({ 16, 16 });
 	window = win;
 }
 
@@ -20,23 +20,23 @@ Player::~Player()
 
 float Player::getX()
 {
-	return collider.getPosition().x;
+	return sprite.getPosition().x;
 }
 
 float Player::getY()
 {
-	return collider.getPosition().y;
+	return sprite.getPosition().y;
 }
 
 float Player::getRotation()
 {
-	return collider.getRotation();
+	return sprite.getRotation();
 }
 
 void Player::render(sf::RenderWindow *window)
 {
 	//window->draw(debugline, 2, sf::Lines); // DEBUG
-	window->draw(collider);
+	window->draw(sprite);
 	
 }
 
@@ -46,19 +46,19 @@ void Player::update()
 	movey = 0.f;
 	
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::W))) {
-		if (collider.getPosition().y > 0)
+		if (sprite.getPosition().y > 0)
 			movey = -1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D))) {
-		if (collider.getPosition().x < window->getSize().x)
+		if (sprite.getPosition().x < window->getSize().x)
 			movex = 1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A))) {
-		if (collider.getPosition().x > 0)
+		if (sprite.getPosition().x > 0)
 			movex = -1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S))) {
-		if (collider.getPosition().y < window->getSize().y)
+		if (sprite.getPosition().y < window->getSize().y)
 			movey = 1.f;
 	}
 	
@@ -89,28 +89,48 @@ void Player::update()
 void Player::move()
 {
 	float dt = Time::deltaTime;
-	collider.move({ movex * speed * dt, movey * speed * dt});
+	sprite.move({ movex * speed * dt, movey * speed * dt});
 }
 
 void Player::shoot(float cd)
 {
 	if (canShoot)
 	{
-		ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()),1.f);
+		float vectorLength = sqrt(direction.x*direction.x + direction.y*direction.y);
+		sf::Vector2f offset(direction.y / vectorLength, direction.x / vectorLength);
+		switch (level)
+		{
+
+		case 1:
+			ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()), 1.f);
+			break;
+		case 2:
+
+			ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x*15, getY() - offset.y*15 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x*15, getY() + offset.y*15 }, getRotation()), 1.f);
+			break;
+		case 3:
+
+			ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x*15, getY() - offset.y*15 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x*15, getY() + offset.y*15 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x*25, getY() - offset.y*25 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x*25, getY() + offset.y*25 }, getRotation()), 1.f);
+			break;
+		}
+		
 
 		canShoot = false;
 		timeToNextShot= Time::Clock.getElapsedTime().asSeconds() + cd;
 		std::cout << timeToNextShot << std::endl;
-		
-		
-
 	}
 
 }
 
 void Player::setRotation(float angle)
 {
-	collider.setRotation(angle);
+	sprite.setRotation(angle);
 }
 
 void Player::rotateToMouse()
@@ -125,11 +145,12 @@ void Player::rotateToMouse()
 
 	const float PI = 3.14159265359f;
 
-	float dx = position.x - curPos.x;
-	float dy = position.y - curPos.y;
-	angle = (atan2(dy, dx)) * 180 / PI;
+	direction = sf::Vector2f(position.x - curPos.x, position.y - curPos.y);
+
+	angle = (atan2(direction.y, direction.x)) * 180 / PI;
 
 	setRotation(angle);
 }
+
 
 

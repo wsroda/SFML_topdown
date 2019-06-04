@@ -83,6 +83,8 @@ void Game::run()
 {
 	player = new Player({ (float)window->getSize().x / 2 , 3 * (float)window->getSize().y / 4 }, window);
 
+	ShootingEnemy enemy({ 100, 100 });
+
 	sf::Cursor cursor;
 	cursor.loadFromSystem(sf::Cursor::Cross);
 

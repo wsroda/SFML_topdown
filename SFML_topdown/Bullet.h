@@ -1,12 +1,15 @@
-#pragma once
+#ifndef BULLET_H
+#define BULLET_H
+
 #include"ObjectManager.h"
 class Bullet : public GameObject
 {
 
 private: 
-	sf::RectangleShape collider;
+	sf::RectangleShape sprite;
 	void move();
 	float angle;
+	sf::Vector2f moveVector;
 
 public:
 	Bullet(sf::Vector2f pos, float angle);
@@ -17,4 +20,5 @@ public:
 	virtual void render(sf::RenderWindow *window) override;
 	virtual void update() override;
 };
+#endif
 

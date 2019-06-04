@@ -1,4 +1,6 @@
-#pragma once
+#ifndef OBJECTMANAGER_H
+#define OBJECTMANAGER_H
+
 #include<vector>
 #include<algorithm>
 #include"GameObject.h"
@@ -26,4 +28,4 @@ public:
 	static void render(sf::RenderWindow *win);
 	static void manageObjects();
 };
-
+#endif
