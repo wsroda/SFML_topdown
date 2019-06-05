@@ -16,7 +16,6 @@
 #include"Player.h"
 #include"ShootingEnemy.h"
 #include"ExplodingEnemy.h"
-
 class Game
 {
 private:

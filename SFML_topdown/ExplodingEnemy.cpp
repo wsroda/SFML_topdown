@@ -26,9 +26,19 @@ float ExplodingEnemy::getY()
 	return sprite.getPosition().y;
 }
 
-void ExplodingEnemy::Explode()
+void ExplodingEnemy::explode()
 {
+	sprite.setOrigin(ExplosionRadius, ExplosionRadius);
+	sprite.setRadius(ExplosionRadius);
+	ObjectManager::destroy(this, 0.1f);
 
+}
+
+void ExplodingEnemy::startExploding(float sec)
+{
+	exploding = true;
+	timeToExplosion = Time::Clock.getElapsedTime().asSeconds() + sec;
+	
 }
 
 void ExplodingEnemy::move()
@@ -59,6 +69,15 @@ void ExplodingEnemy::update()
 			move();
 	}
 	else
-		exploding = true;
-
+	{
+		if (!exploding)
+			startExploding(0.75f);
+	}
+	if (exploding)
+	{
+		if (Time::Clock.getElapsedTime().asSeconds() >= timeToExplosion)
+		{
+			explode();
+		}
+	}
 }

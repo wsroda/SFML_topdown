@@ -9,7 +9,7 @@ private:
 	sf::CircleShape sprite;
 
 	class Player *target;
-	float speed = 300.f;
+	float speed = 450.f;
 
 public:
 	ExplodingEnemy(sf::Vector2f pos, Player * newTarget);
@@ -20,7 +20,9 @@ public:
 	float collisionRadius = 16.f;
 	float ExplosionRadius = 128.f;
 	bool exploding = false;
-	void Explode();
+	void explode();
+	void startExploding(float sec);
+	float timeToExplosion;
 	void move();
 
 
