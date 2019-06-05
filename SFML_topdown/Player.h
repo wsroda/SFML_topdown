@@ -42,6 +42,7 @@ public:
 	float getX();
 	float getY();
 	float getRotation();
+	bool running = true;
 
 	float collisionRadius = 18.f;
 
@@ -52,6 +53,7 @@ public:
 	void rotateToMouse();
 
 	void displayUI(sf::RenderWindow *win);
+	void drawSummary(sf::RenderWindow *win);
 
 	sf::Vertex debugline[2] =
 	{

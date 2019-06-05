@@ -92,17 +92,26 @@ void Game::run()
 	while (this->window->isOpen())
 	{
 		this->updateSFMLEvents();
-		if (!paused)
+		if (ObjectManager::player->running)
 		{
-			this->window->setMouseCursor(cursor);
-			Time::updateDeltaTime();
-			this->update();
-			this->render();
-			ObjectManager::manageObjects();
-			spawner->update();
+			if (!paused)
+			{
+				this->window->setMouseCursor(cursor);
+				Time::updateDeltaTime();
+				this->update();
+				this->render();
+				ObjectManager::manageObjects();
+				spawner->update();
+			}
+		}
+		else
+		{
+			Time::Clock.pause();
+			this->window->clear(sf::Color::Black);
+			ObjectManager::player->drawSummary(this->window);
+			this->window->display();
 		}
 	}
-	
 }
 
 void Game::pause()

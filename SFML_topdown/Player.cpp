@@ -36,9 +36,8 @@ float Player::getRotation()
 void Player::takeDamage(int amount)
 {
 	healthPoints--;
-	if (healthPoints > 1)
-		;
-			//KONIEC GRY
+	if (healthPoints < 1)
+		running = false;
 }
 
 void Player::render(sf::RenderWindow *window)
@@ -188,4 +187,20 @@ void Player::displayUI(sf::RenderWindow *win)
 	win->draw(HPtext);
 }
 
-
+void Player::drawSummary(sf::RenderWindow * win)
+{
+	int totalseconds = (int)Time::Clock.getElapsedTime().asSeconds();
+	int sec = totalseconds % 60;
+	int min = totalseconds / 60;
+	sf::Text text;
+	std::stringstream ss;
+	ss << "You survived for: " << min << "m " << sec << "s" << std::endl;
+	text.setString(ss.str().c_str());
+	text.setFont(ObjectManager::font);
+	text.setCharacterSize(30);
+	text.setStyle(sf::Text::Bold);
+	text.setOrigin(text.getLocalBounds().left + text.getLocalBounds().width / 2.0f, 
+					text.getLocalBounds().top + text.getLocalBounds().height / 2.0f);
+	text.setPosition(ObjectManager::win->getSize().x/2, ObjectManager::win->getSize().y / 2);
+	win->draw(text);
+}

@@ -17,6 +17,7 @@
 #include"ShootingEnemy.h"
 #include"ExplodingEnemy.h"
 #include"EnemySpawner.h"
+#include"ObjectManager.h"
 class Game
 {
 private:
@@ -27,10 +28,9 @@ private:
 	bool paused = false;
 
 public:
+
 	Game();
 	virtual ~Game();
-
-	//functions
 	EnemySpawner *spawner;
 	void updateSFMLEvents();
 	void update();
