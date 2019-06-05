@@ -1,4 +1,5 @@
 #include "ObjectManager.h"
+#include <typeinfo>
 
 std::vector<GameObject*> ObjectManager::gameObjects = std::vector<GameObject*>();
 
@@ -6,6 +7,8 @@ std::stack<GameObject*> ObjectManager::toAdd = std::stack<GameObject*>();
 std::stack<GameObject*> ObjectManager::toRemove = std::stack<GameObject*>();
 Player *ObjectManager::player;
 sf::RenderWindow *ObjectManager::win;
+sf::Font ObjectManager::font;
+
 
 ObjectManager::ObjectManager()
 {
@@ -15,6 +18,11 @@ ObjectManager::ObjectManager()
 ObjectManager::~ObjectManager()
 {
 
+}
+
+void ObjectManager::loadFont()
+{
+	font.loadFromFile("Helvetica.ttf");
 }
 
 void ObjectManager::add(GameObject *obj) //adding objects
@@ -41,8 +49,6 @@ void ObjectManager::destroy(GameObject *obj, float sec) //destroying objects (sc
 			obj->timeToDestroy = Time::Clock.getElapsedTime().asSeconds() + sec;
 		}
 	}
-	
-
 }
 
 void ObjectManager::update()
@@ -61,12 +67,14 @@ void ObjectManager::render(sf::RenderWindow * win)
 void ObjectManager::manageObjects()
 {
 	//checking objects scheduled to destroy
-	for (auto object: ObjectManager::gameObjects)
+	for (auto object : ObjectManager::gameObjects)
+	{
 		if (object->destroying)
 		{
 			if (Time::Clock.getElapsedTime().asSeconds() > object->timeToDestroy)
 				ObjectManager::remove(object);
 		}
+	}
 
 	//adding objects
 	while (!toAdd.empty()) 
@@ -79,14 +87,20 @@ void ObjectManager::manageObjects()
 	//removing objects
 	while (!toRemove.empty()) 
 	{ 
-		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), toRemove.top()), gameObjects.end());
-		delete toRemove.top();
+		GameObject * obj = toRemove.top();
+		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), obj), gameObjects.end());
 		toRemove.pop();
+		delete obj;
 	}
+
+
+
 }
 
 void ObjectManager::spawnPlayer(Player *pl)
 {
 	player = pl;
 }
+
+
 

@@ -48,6 +48,8 @@ void Bullet::update()
 	move();
 	if (!fromEnemy)
 		checkCollisionsWithEnemies();
+	else
+		checkCollisionsWithPlayer();
 }
 
 void Bullet::checkCollisionsWithEnemies()
@@ -58,13 +60,23 @@ void Bullet::checkCollisionsWithEnemies()
 		if (dist <= enemy->collisionRadius)
 		{
 			enemy->takeDamage();
+			destroying = false;
 			ObjectManager::destroy(this);
+			break;
 		}
 	}
 }
 
 void Bullet::checkCollisionsWithPlayer()
 {
-	//ObjectManager::player->takeDamage();
-	ObjectManager::destroy(this);
+	Player *player = ObjectManager::player;
+	float dist = sqrt((player->getX() - getX())*(player->getX() - getX()) + (player->getY() - getY())*(player->getY() - getY()));
+	
+	if (dist <= player->collisionRadius)
+	{
+		ObjectManager::player->takeDamage();
+		destroying = false;
+		ObjectManager::remove(this);
+	}
+	
 }

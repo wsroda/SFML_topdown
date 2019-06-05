@@ -16,7 +16,7 @@ private:
 	class Player *target;
 
 	void shoot(float cd = 0.5f);
-	bool canShoot = true;
+	bool canShoot = false;
 	float timeToNextShot;
 
 	sf::Vector2f getRandomVector();

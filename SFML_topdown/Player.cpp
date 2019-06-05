@@ -1,4 +1,5 @@
-#include "Player.h"
+﻿#include "Player.h"
+#include<string>
 
 
 
@@ -44,11 +45,17 @@ void Player::render(sf::RenderWindow *window)
 {
 	//window->draw(debugline, 2, sf::Lines); // DEBUG
 	window->draw(sprite);
-	
+	displayUI(window);
 }
 
 void Player::update()
 {
+	if (ObjectManager::player->killCount >= 5)
+		level = 2;
+	else if (ObjectManager::player->killCount >= 10)
+		level = 3;
+
+
 	movex = 0.f;
 	movey = 0.f;
 	
@@ -109,28 +116,28 @@ void Player::shoot(float cd)
 		{
 
 		case 1:
-			ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x * 5, getY() - offset.y * 5 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x * 5, getY() + offset.y * 5 }, getRotation()), 1.f);
 			break;
 		case 2:
 
 			ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()), 1.f);
-			ObjectManager::destroy(new Bullet({ getX() + offset.x*15, getY() - offset.y*15 }, getRotation()), 1.f);
-			ObjectManager::destroy(new Bullet({ getX() - offset.x*15, getY() + offset.y*15 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x*10, getY() - offset.y*10 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x*10, getY() + offset.y*10 }, getRotation()), 1.f);
 			break;
 		case 3:
 
 			ObjectManager::destroy(new Bullet({ getX(), getY() }, getRotation()), 1.f);
-			ObjectManager::destroy(new Bullet({ getX() + offset.x*15, getY() - offset.y*15 }, getRotation()), 1.f);
-			ObjectManager::destroy(new Bullet({ getX() - offset.x*15, getY() + offset.y*15 }, getRotation()), 1.f);
-			ObjectManager::destroy(new Bullet({ getX() + offset.x*25, getY() - offset.y*25 }, getRotation()), 1.f);
-			ObjectManager::destroy(new Bullet({ getX() - offset.x*25, getY() + offset.y*25 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x*10, getY() - offset.y*10 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x*10, getY() + offset.y*10 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() + offset.x*20, getY() - offset.y*20 }, getRotation()), 1.f);
+			ObjectManager::destroy(new Bullet({ getX() - offset.x*20, getY() + offset.y*20 }, getRotation()), 1.f);
 			break;
 		}
 		
 
 		canShoot = false;
 		timeToNextShot= Time::Clock.getElapsedTime().asSeconds() + cd;
-		std::cout << timeToNextShot << std::endl;
 	}
 
 }
@@ -159,5 +166,26 @@ void Player::rotateToMouse()
 	setRotation(angle);
 }
 
+void Player::displayUI(sf::RenderWindow *win)
+{
+	sf::Text HPtext;
+	std::stringstream ss;
+	int totalseconds = (int)Time::Clock.getElapsedTime().asSeconds();
+	int sec = totalseconds % 60;
+	int min = totalseconds / 60;
+	std::string sep; //separator between min and sec
+	if (sec / 10 == 0)
+		sep = ":0";
+	else
+		sep = ":";
+
+	ss << min << sep << sec << "\t\t" << "LVL: " << level << "\t\t" <<"Health: " << healthPoints;
+	HPtext.setString(ss.str().c_str());
+	HPtext.setFont(ObjectManager::font);
+	HPtext.setCharacterSize(30);
+	HPtext.setStyle(sf::Text::Bold);
+	HPtext.setPosition(ObjectManager::win->getSize().x-500, 0);
+	win->draw(HPtext);
+}
 
 

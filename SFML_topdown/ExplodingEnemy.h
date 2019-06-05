@@ -20,6 +20,7 @@ public:
 	float collisionRadius = 16.f;
 	float ExplosionRadius = 128.f;
 	bool exploding = false;
+	bool exploded = false;
 	void explode();
 	void startExploding(float sec);
 	float timeToExplosion;

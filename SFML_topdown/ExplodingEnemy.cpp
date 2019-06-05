@@ -28,10 +28,17 @@ float ExplodingEnemy::getY()
 
 void ExplodingEnemy::explode()
 {
+	std::cout << "explode" << std::endl;
 	sprite.setOrigin(ExplosionRadius, ExplosionRadius);
 	sprite.setRadius(ExplosionRadius);
+
+
+	float dist = sqrt((target->getX() - getX())*(target->getX() - getX()) + (target->getY() - getY())*(target->getY() - getY()));
+	if (dist <= target->collisionRadius + ExplosionRadius)
+		target->takeDamage();
 	ObjectManager::destroy(this, 0.1f);
 
+	exploded = true;
 }
 
 void ExplodingEnemy::startExploding(float sec)
@@ -75,9 +82,12 @@ void ExplodingEnemy::update()
 	}
 	if (exploding)
 	{
-		if (Time::Clock.getElapsedTime().asSeconds() >= timeToExplosion)
+		if (!exploded)
 		{
-			explode();
+			if (Time::Clock.getElapsedTime().asSeconds() >= timeToExplosion)
+			{
+				explode();
+			}
 		}
 	}
 }

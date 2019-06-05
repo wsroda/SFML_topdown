@@ -40,6 +40,7 @@ Game::Game()
 Game::~Game()
 {
 	delete this->window;
+	delete spawner;
 }
 
 
@@ -80,10 +81,10 @@ void Game::render()
 
 void Game::run()
 {
+	ObjectManager::loadFont();
 	ObjectManager::spawnPlayer(new Player({ (float)window->getSize().x / 2 , 3 * (float)window->getSize().y / 4 }));
-	ShootingEnemy *enemy = new ShootingEnemy({ 100, 100 }, ObjectManager::player);
-	ExplodingEnemy *enemy2 = new ExplodingEnemy({ 100, 100 }, ObjectManager::player);
-
+	
+	spawner = new EnemySpawner();
 
 	sf::Cursor cursor;
 	cursor.loadFromSystem(sf::Cursor::Cross);
@@ -98,6 +99,7 @@ void Game::run()
 			this->update();
 			this->render();
 			ObjectManager::manageObjects();
+			spawner->update();
 		}
 	}
 	

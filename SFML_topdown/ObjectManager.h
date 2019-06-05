@@ -20,6 +20,9 @@ private:
 public:
 	ObjectManager();
 	~ObjectManager();
+
+	static sf::Font font;
+	static void loadFont();
 	
 	
 	static std::vector<GameObject*> gameObjects;

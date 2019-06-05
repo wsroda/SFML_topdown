@@ -3,8 +3,6 @@
 
 std::vector<ShootingEnemy*> ShootingEnemy::Enemies = std::vector<ShootingEnemy*>();
 
-
-
 ShootingEnemy::ShootingEnemy(sf::Vector2f pos, Player * newTarget)
 {
 	sprite.setRadius(16);
@@ -13,6 +11,7 @@ ShootingEnemy::ShootingEnemy(sf::Vector2f pos, Player * newTarget)
 	sprite.setOrigin({ 16, 16 });
 	target = newTarget;
 	Enemies.push_back(this);
+	timeToNextShot = Time::Clock.getElapsedTime().asSeconds() + 1.f;
 }
 
 
@@ -34,16 +33,18 @@ float ShootingEnemy::getY()
 void ShootingEnemy::takeDamage()
 {
 	healthPoints--;
-	std::cout << healthPoints << std::endl;
 	if (healthPoints < 1)
-		ObjectManager::destroy(this,0.1f);
+	{
+		ObjectManager::player->killCount++;
+		std::cout << ObjectManager::player->killCount << std::endl;
+		ObjectManager::destroy(this, 0.1f);
+	}
 }
 
 void ShootingEnemy::shoot(float cd)
 {
 	sf::Vector2f direction = sf::Vector2f(target->getX() - getX(), target->getY() - getY());
 	float rotation = (atan2(direction.y, direction.x)) * 180 / 3.14159265359f;
-	std::cout << rotation << std::endl;
 	ObjectManager::destroy(new Bullet({ getX(), getY() }, rotation, true), 3.f);
 
 	canShoot = false;

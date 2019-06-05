@@ -16,6 +16,7 @@
 #include"Player.h"
 #include"ShootingEnemy.h"
 #include"ExplodingEnemy.h"
+#include"EnemySpawner.h"
 class Game
 {
 private:
@@ -30,7 +31,7 @@ public:
 	virtual ~Game();
 
 	//functions
-	Player *player;
+	EnemySpawner *spawner;
 	void updateSFMLEvents();
 	void update();
 	void render();

@@ -20,7 +20,7 @@ private:
 	float movey;
 	float angle;
 	void setRotation(float angle);
-	int level = 3;
+	int level = 1;
 	sf::Vector2f direction;
 
 	sf::RenderWindow *window;
@@ -38,6 +38,7 @@ public:
 	int healthPoints = 5;
 
 	
+	int killCount = 0;
 	float getX();
 	float getY();
 	float getRotation();
@@ -49,6 +50,8 @@ public:
 	virtual void render(sf::RenderWindow *window) override;
 	virtual void update() override;
 	void rotateToMouse();
+
+	void displayUI(sf::RenderWindow *win);
 
 	sf::Vertex debugline[2] =
 	{
