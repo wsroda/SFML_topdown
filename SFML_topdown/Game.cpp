@@ -21,7 +21,7 @@ void Game::initWindow()
 	}
 
 	this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close);
-
+	ObjectManager::win = this->window;
 	sf::Cursor cursor;
 	if (cursor.loadFromSystem(sf::Cursor::Cross))
 		this->window->setMouseCursor(cursor);
@@ -63,8 +63,7 @@ void Game::updateSFMLEvents()
 void Game::update()
 {
 
-	ObjectManager::update(); //UPDATING EVERY GAME OBJECT
-	//player->update();
+	ObjectManager::update();
 
 }
 
@@ -81,9 +80,10 @@ void Game::render()
 
 void Game::run()
 {
-	player = new Player({ (float)window->getSize().x / 2 , 3 * (float)window->getSize().y / 4 }, window);
+	ObjectManager::spawnPlayer(new Player({ (float)window->getSize().x / 2 , 3 * (float)window->getSize().y / 4 }));
+	ShootingEnemy *enemy = new ShootingEnemy({ 100, 100 }, ObjectManager::player);
+	ExplodingEnemy *enemy2 = new ExplodingEnemy({ 100, 100 }, ObjectManager::player);
 
-	ShootingEnemy enemy({ 100, 100 });
 
 	sf::Cursor cursor;
 	cursor.loadFromSystem(sf::Cursor::Cross);

@@ -4,6 +4,8 @@ std::vector<GameObject*> ObjectManager::gameObjects = std::vector<GameObject*>()
 
 std::stack<GameObject*> ObjectManager::toAdd = std::stack<GameObject*>();
 std::stack<GameObject*> ObjectManager::toRemove = std::stack<GameObject*>();
+Player *ObjectManager::player;
+sf::RenderWindow *ObjectManager::win;
 
 ObjectManager::ObjectManager()
 {
@@ -81,5 +83,10 @@ void ObjectManager::manageObjects()
 		delete toRemove.top();
 		toRemove.pop();
 	}
+}
+
+void ObjectManager::spawnPlayer(Player *pl)
+{
+	player = pl;
 }
 

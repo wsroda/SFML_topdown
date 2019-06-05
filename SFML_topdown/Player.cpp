@@ -4,13 +4,12 @@
 
 
 
-Player::Player(sf::Vector2f pos, sf::RenderWindow *win)
+Player::Player(sf::Vector2f pos)
 {
 	sprite.setSize({ 32, 32 });
 	sprite.setFillColor(sf::Color::Green);
 	sprite.setPosition(pos);
 	sprite.setOrigin({ 16, 16 });
-	window = win;
 }
 
 Player::~Player()
@@ -33,6 +32,14 @@ float Player::getRotation()
 	return sprite.getRotation();
 }
 
+void Player::takeDamage(int amount)
+{
+	healthPoints--;
+	if (healthPoints > 1)
+		;
+			//KONIEC GRY
+}
+
 void Player::render(sf::RenderWindow *window)
 {
 	//window->draw(debugline, 2, sf::Lines); // DEBUG
@@ -50,7 +57,7 @@ void Player::update()
 			movey = -1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::D))) {
-		if (sprite.getPosition().x < window->getSize().x)
+		if (sprite.getPosition().x < ObjectManager::win->getSize().x)
 			movex = 1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::A))) {
@@ -58,7 +65,7 @@ void Player::update()
 			movex = -1.f;
 	}
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::S))) {
-		if (sprite.getPosition().y < window->getSize().y)
+		if (sprite.getPosition().y < ObjectManager::win->getSize().y)
 			movey = 1.f;
 	}
 	
@@ -138,7 +145,7 @@ void Player::rotateToMouse()
 	sf::Vector2f curPos;
 	curPos.x = getX();
 	curPos.y = getY();
-	sf::Vector2i position = sf::Mouse::getPosition(*window);
+	sf::Vector2i position = sf::Mouse::getPosition(*ObjectManager::win);
 
 	//debugline[0] = sf::Vertex(sf::Vector2f((float)position.x, (float)position.y)); // DEBUG
 

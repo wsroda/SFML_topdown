@@ -5,6 +5,7 @@
 #include<algorithm>
 #include"GameObject.h"
 #include<stack>
+#include"Player.h"
 
 
 
@@ -12,7 +13,7 @@ class ObjectManager
 {
 
 private:
-	static std::vector<GameObject*> gameObjects;
+	
 	static std::stack<GameObject*> toRemove;
 	static std::stack<GameObject*> toAdd;
 
@@ -20,6 +21,8 @@ public:
 	ObjectManager();
 	~ObjectManager();
 	
+	
+	static std::vector<GameObject*> gameObjects;
 	static void add(GameObject *obj);
 	static void remove(GameObject *obj);
 	static void destroy(GameObject *obj, float sec=0.f);
@@ -27,5 +30,9 @@ public:
 	static void update();
 	static void render(sf::RenderWindow *win);
 	static void manageObjects();
+
+	static class Player * player;
+	static sf::RenderWindow *win;
+	static void spawnPlayer(Player *pl);
 };
 #endif

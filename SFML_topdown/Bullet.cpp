@@ -2,7 +2,7 @@
 
 
 
-Bullet::Bullet(sf::Vector2f pos, float alpha)
+Bullet::Bullet(sf::Vector2f pos, float alpha, bool enemy)
 {
 	sprite.setSize({ 8,4 });
 	sprite.setFillColor(sf::Color::Red);
@@ -12,7 +12,7 @@ Bullet::Bullet(sf::Vector2f pos, float alpha)
 	sprite.setRotation(angle);
 	const float PI = 3.14159265359f;
 	moveVector = sf::Vector2f(cos(angle * PI / 180), sin(angle * PI / 180));
-
+	fromEnemy = enemy;
 }
 
 Bullet::~Bullet()
@@ -28,6 +28,16 @@ void Bullet::move()
 	sprite.move({ speed * moveVector.x * dt, speed * moveVector.y * dt });
 }
 
+float Bullet::getX()
+{
+	return sprite.getPosition().x;
+}
+
+float Bullet::getY()
+{
+	return sprite.getPosition().y;
+}
+
 void Bullet::render(sf::RenderWindow * window)
 {
 	window->draw(sprite);
@@ -36,4 +46,25 @@ void Bullet::render(sf::RenderWindow * window)
 void Bullet::update()
 {
 	move();
+	if (!fromEnemy)
+		checkCollisionsWithEnemies();
+}
+
+void Bullet::checkCollisionsWithEnemies()
+{
+	for (auto enemy : ShootingEnemy::Enemies)
+	{
+		float dist = sqrt((enemy->getX() - getX())*(enemy->getX() - getX()) + (enemy->getY() - getY())*(enemy->getY() - getY()));
+		if (dist <= enemy->collisionRadius)
+		{
+			enemy->takeDamage();
+			ObjectManager::destroy(this);
+		}
+	}
+}
+
+void Bullet::checkCollisionsWithPlayer()
+{
+	//ObjectManager::player->takeDamage();
+	ObjectManager::destroy(this);
 }

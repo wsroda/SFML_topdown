@@ -25,21 +25,26 @@ private:
 
 	sf::RenderWindow *window;
 
+	void shoot(float cd = 0.5f);
 	bool canShoot = true;
 	float timeToNextShot;
 
 
 public:
-	Player(sf::Vector2f pos, sf::RenderWindow *win);
+	Player(sf::Vector2f pos);
 	~Player();
 
 	float speed = 200.f;
 	int healthPoints = 5;
 
-	void shoot(float cd=0.5f);
+	
 	float getX();
 	float getY();
 	float getRotation();
+
+	float collisionRadius = 18.f;
+
+	void takeDamage(int amount = 1);
 	
 	virtual void render(sf::RenderWindow *window) override;
 	virtual void update() override;
